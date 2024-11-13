@@ -1,0 +1,26 @@
+extends layouts/main
+
+block content
+  include partials/header
+      main.container 
+        h1 Registrate
+        form(action="/signin" method="POST") 
+            label(for="email") Direccion e-mail:
+            input(type="text", id="email", name="email", required)
+            br
+            label(for="name") Nombre y Apellido:
+            input(type="text", id="name", name="name", required)
+            br
+            label(for="username") Usuario:
+            input(type="text", id="username", name="username", required)
+            br
+            label(for="password") Contraseña:
+            input(type="password", id="password", name="password", required)
+            br
+            br
+            button.add-button(type="submit") Registrar
+            if  newUser 
+                br
+                br
+                p nuevo usuario #[b #{username} ] creado con exito
+            a.back-button(href="/login") Iniciar session    

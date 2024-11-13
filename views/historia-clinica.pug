@@ -1,0 +1,83 @@
+extends layouts/main
+
+block content
+  header 
+    a.back-button(href=`/atencion/${id_turno}`) Nuevo diagnostico
+    a.back-button(href=`/historial/${id_paciente}/${id_turno}`) Historial Medico
+
+    a.back-button(href=`/`) Turnos 
+
+  main.container(data-vista="historia-clinica") 
+    h1= title 
+    p Fecha de atencion: #{historial.fecha}
+    p Profesional : #{historial.nombre_profesional}
+    p Motivo de consulta: #{historial.motivo_consulta}
+    .atencion-container
+      .atencion
+        .atencion-menu
+          ul.atencion-options
+             button.btn_atencion(data-textarea="diagnostico" ) Diagnostico
+             button.btn_atencion(data-textarea="evolucion" class=(mismoProfesional? "disabled": "")) Evolucion 
+             button.btn_atencion(data-textarea="alergias" class=(mismoProfesional || !historial.importancia_alergia? "disabled": "")) Alergias 
+             button.btn_atencion(data-textarea="antecedentes" class=(mismoProfesional || !historial.descripcion_antecedente? "disabled": "")) Antecedentes
+             button.btn_atencion(data-textarea="habitos" class=(mismoProfesional || !historial.descripcion_habito? "disabled": "")) Habitos 
+             button.btn_atencion(data-textarea="medicamentos" class=(mismoProfesional || !historial.descripcion_medicamento? "disabled": "")) Medicamentos
+        .atencion-area
+            form#atencion-form.area_form(action=`/atencion/` method="POST")
+              //- Diagnostico
+              .inputs(data-type="diagnostico")
+                textarea.ta_form(id="Idiagnostico", name="diagnostico", disabled)= historial.diagnostico
+                .checkbox-group
+                  input(type="checkbox" name="diagnosticoFinal" id="diagnosticoFinal" checked=!historial.estado_diagnostico disabled)
+                  label.checkbox-label(for="IdiagnosticoFinal") Diagnostico final
+              //- Evolucion
+              .inputs.none(data-type="evolucion")
+                .cont-editor.disabled
+                  div.editor3#editor
+                textarea(id="Ievolucion", name="evolucion" hidden)= historial.evolucion 
+                .select-group
+                  select(id="evolucionEstado" disabled)
+                    option(value="") Seleccionar plantilla
+
+              //- Alergias
+              .inputs.none(data-type="alergias")
+                .select-group
+                  select(id="alergias" class=" ta_form" name="alergias" disabled)
+                    option(value=historial.id_alergia) #{historial.nombre_alergia}
+                    
+
+
+                  select(id="alergiasEstado", class="", name="alergiasEstado" disabled)
+                    option(value=historial.importancia_alergia) #{historial.importancia_alergia}
+
+                .date-group
+                  input(type="date" id="alergiasInicio" name="alergiasInicio" disabled value=historial.fecha_inicio_alergia)
+                  input(type="date" id="alergiasFinal" name="alergiasFinal" disabled value=historial.fecha_fin_alergia)
+
+              //- Antecedentes
+              .inputs.none(data-type="antecedentes")
+                textarea.ta_form(id="Iantecedentes", name="antecedentes" disabled)= historial.descripcion_antecedente
+                .date-group
+                  input(type="date" id="antecedentesInicio" name="antecedentesInicio" disabled value=historial.fecha_inicio_antecedente)
+                  input(type="date" id="antecedentesFinal" name="antecedentesFinal"  disabled value=historial.fecha_fin_antecedente)
+
+              //- Hábitos
+              .inputs.none(data-type="habitos")
+                textarea.ta_form(id="Ihabitos", name="habitos" disabled)= historial.descripcion_habito
+                .date-group
+                  input(type="date" id="habitosInicio" name="habitosInicio" disabled  value=historial.fecha_inicio_habito)
+                  input(type="date" id="habitosFinal" name="habitosFinal" disabled value=historial.fecha_fin_habito)
+
+              //- Medicamentos
+              .inputs.none(data-type="medicamentos")
+                textarea.ta_form(id="Imedicamentos", name="medicamentos", placeholder="Ingresar medicamentos" disabled)= historial.descripcion_medicamento
+                .date-group
+                  input(type="date" id="medicamentosInicio" name="medicamentosInicio" disabled value=historial.fecha_inicio_medicamento)
+                  input(type="date" id="medicamentosFinal" name="medicamentosFinal" disabled value=historial.fecha_fin_medicamento )
+              
+              //- turno 
+              
+              input(value=  name="turno" hidden)
+              
+    button.submit-button(type="submit") Completar consulta
+    

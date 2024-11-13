@@ -1,0 +1,28 @@
+extends layouts/main
+
+block content
+    header 
+        a.back-button(href=`/atencion/${turno}`) Nuevo diagnostico
+        a.back-button(href=`/historial/${paciente}/${turno}`) Historial Medico
+        a.back-button(href=`/`) Turnos 
+  
+    main.container 
+        h1.text-center= title 
+
+        ul.task-list
+            if historial === undefined 
+                li 
+                    b.text-center no va por ahi
+            else if historial.length === 0
+                li 
+                    b.text-center no hay historial clinico
+            else 
+                each historia in historial
+                    li
+                        .tagData
+                            p Fecha de atencion: #{historia.fecha}
+                            h4 Nombre del paciente: #{historia.nombre}
+                            h4 Motivo de atencion: #{historia.motivo_consulta}
+                            h4 Nombre del Profesional: #{historia.nombre_profesional}
+                        .tagData
+                            a.add-button(href=`/historia_clinica/${historia.id_historia}/${paciente}/${turno}`) Detalles

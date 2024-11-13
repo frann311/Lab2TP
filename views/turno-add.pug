@@ -1,0 +1,27 @@
+extends layouts/main
+
+block content
+      main.container 
+        h1= title 
+        div.text-right
+            a.delete-button(href="/plantillas") volver
+        form( id="form-pacientes" action="/add" method="POST") 
+            label(for="motivo") Agregar motivo de consulta
+            input(type="text", id="motivo_turno", name="motivo", required)
+            label(for="fecha") Asignar fecha de consulta
+            input(type="date", id="date_turno", name="date", required)
+            input(type="hidden", name="id_paciente", value=id_paciente)
+            select(id="hora_turno" name="hora")
+                option(value="") Seleccionar hora
+                option(value="1") 08:00
+                option(value="2") 09:00
+                option(value="3") 10:00
+                option(value="4") 11:00
+                option(value="5") 12:00
+                option(value="6") 13:00
+                option(value="7") 14:00
+                option(value="8") 15:00
+                option(value="9") 16:00
+                option(value="10") 17:00
+                option(value="11") 18:00
+        button.add-button(type="submit" id="btn-turnos") Agregar 

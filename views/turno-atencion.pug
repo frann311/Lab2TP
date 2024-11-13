@@ -1,0 +1,88 @@
+extends layouts/main
+
+block content
+  header 
+    a.back-button(href=`/atencion/${turno.id_turno}`) Nuevo diagnostico
+    a.back-button(href=`/historial/${turno.id_paciente}/${turno.id_turno}`) Historial Medico
+    a.back-button(href=`/`) Turnos 
+
+  main.container 
+    h1= title 
+    p Nombre: #{turno.nombre}
+    p Motivo: #{turno.motivo_consulta} 
+    .atencion-container
+      .atencion
+        .atencion-menu
+          ul.atencion-options
+             button.btn_atencion(data-textarea="diagnostico") Diagnostico
+             button.btn_atencion(data-textarea="evolucion") Evolucion 
+             button.btn_atencion(data-textarea="alergias") Alergias 
+             button.btn_atencion(data-textarea="antecedentes") Antecedentes
+             button.btn_atencion(data-textarea="habitos") Habitos 
+             button.btn_atencion(data-textarea="medicamentos") Medicamentos
+        .atencion-area
+            form#atencion-form.area_form(action=`/atencion/${turno.id_turno}` method="POST")
+              //- Diagnostico
+              .inputs(data-type="diagnostico")
+                textarea.ta_form(id="Idiagnostico", name="diagnostico", placeholder="Ingresar diagnostico")
+                .checkbox-group
+                  input(type="checkbox" name="diagnosticoFinal" id="diagnosticoFinal" checked) 
+                  label.checkbox-label(for="IdiagnosticoFinal") Diagnostico final
+              //- Evolucion
+              .inputs.none(data-type="evolucion")
+                .cont-editor
+                  div.editor#editor
+                textarea(id="Ievolucion", name="evolucion", placeholder="Ingresar evolucion" hidden)
+                .select-group
+                  select(id="evolucionEstado" class="")
+                    option(value="") Seleccionar plantilla
+                    if plantillas && plantillas.length > 0
+                      each plantilla in plantillas
+                        option(value=plantilla.texto_plantilla)= plantilla.title_plantilla
+
+              //- Alergias
+              .inputs.none(data-type="alergias")
+                .select-group
+                  select(id="alergias" class=" ta_form" name="alergias")
+                    option(value="") Seleccionar alergia
+                    if alergias && alergias.length > 0
+                      each alergia in alergias
+                        option(value=alergia.id_tipo_alergia)= alergia.nombre_alergia
+
+
+                  select(id="alergiasEstado", class="", name="alergiasEstado")
+                    option(value="") Seleccionar estado
+                        option(value="leve") Leve 
+                        option(value="normal") Normal 
+                        option(value="alto") Alto 
+                .date-group
+                  input(type="date" id="alergiasInicio" name="alergiasInicio" class="" placeholder="Fecha de inicio")
+                  input(type="date" id="alergiasFinal" name="alergiasFinal" class="" placeholder="Fecha final")
+
+              //- Antecedentes
+              .inputs.none(data-type="antecedentes")
+                textarea.ta_form(id="Iantecedentes", name="antecedentes", placeholder="Ingresar antecedentes")
+                .date-group
+                  input(type="date" id="antecedentesInicio" name="antecedentesInicio" class="" placeholder="Fecha de inicio")
+                  input(type="date" id="antecedentesFinal" name="antecedentesFinal" class="" placeholder="Fecha final")
+
+              //- Hábitos
+              .inputs.none(data-type="habitos")
+                textarea.ta_form(id="Ihabitos", name="habitos", placeholder="Ingresar habitos")
+                .date-group
+                  input(type="date" id="habitosInicio" name="habitosInicio" class="" placeholder="Fecha de inicio")
+                  input(type="date" id="habitosFinal" name="habitosFinal" class="" placeholder="Fecha final")
+
+              //- Medicamentos
+              .inputs.none(data-type="medicamentos")
+                textarea.ta_form(id="Imedicamentos", name="medicamentos", placeholder="Ingresar medicamentos")
+                .date-group
+                  input(type="date" id="medicamentosInicio" name="medicamentosInicio" class="" placeholder="Fecha de inicio")
+                  input(type="date" id="medicamentosFinal" name="medicamentosFinal" class="" placeholder="Fecha final")
+              
+              //- turno 
+              
+              input(value=turno.id_turno  name="turno" hidden)
+              
+    button.submit-button(type="submit") Completar consulta
+    

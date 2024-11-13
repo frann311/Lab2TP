@@ -1,0 +1,33 @@
+extends layouts/main
+
+block content
+  
+    main.container 
+        h1.text-center= title 
+        div.text-right
+            a.add-button(href="/pacientes") Agregar turno
+            a.add-button(href=`/plantillas`) Plantillas
+            a.add-button(href="/") Turnos de hoy
+            a.delete-button(href="/logout") Cerrar sesion  
+            
+        form(action="/" method="POST")
+            input(type="date" id="date" name="date" placeholder="Selecciona la fecha" required)
+            button(type="submit") Buscar   
+        h2.text-center= date
+        ul.task-list
+            if turnos === undefined 
+                li 
+                    b.text-center no va por ahi
+            else if turnos.length === 0
+                li 
+                    b.text-center no hay tunos para hoy
+            else 
+                each turno in turnos
+                    li(class=(turno.estado === "atendido" || dateNow > date) ? "completed" : "")
+                        p #{turno.hora_turno}
+                        p #{turno.estado}
+                        h4 #{turno.nombre_paciente}
+                        h4 #{turno.motivo_consulta}
+                        a.add-button(href=`/atencion/${turno.id_turno}`, class=(turno.estado === "atendido" || dateNow > date) ? "disabled" : "") Atender
+                        a.add-button(href=`/historial_profesional/${turno.id_paciente}/${turno.id_turno}`, class=(turno.estado === "atendido" || dateNow > date) ? "disabled" : "") Historial medico
+                        a.delete-button(href=`/delete/${turno.id_turno}`, class=(turno.estado === "atendido" || dateNow > date) ? "disabled" : "") Cancelar

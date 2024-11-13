@@ -1,0 +1,20 @@
+extends layouts/main
+
+block content
+
+    main.container 
+        h1.text-center= title 
+        div.text-right
+            a.add-button(href="/plantillas-add") Agregar plantilla
+            a.delete-button(href="/") volver
+        ul.task-list
+            if plantillas.length === 0
+                li 
+                    b.text-center No se encontraron plantillas cargadas 
+            else 
+                each plantilla in plantillas
+                    li
+                        h4 #{plantilla.title_plantilla}
+                        
+                        a.add-button(href=`/plantillas-edit/${plantilla.id_plantilla}`) Editar 
+                        a.delete-button(href=`/plantillas-delete/${plantilla.id_plantilla}`) Eliminar 

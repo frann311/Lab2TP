@@ -1,0 +1,13 @@
+extends layouts/main
+
+block content
+      main.container(data-vista="plantillas-edit") 
+        h1= title 
+        form(action=`/plantillas-edit/${plantilla.id_plantilla}` method="POST") 
+            label(for="title") Titulo de la Plantilla
+            input(type="text", id="title_plantilla", name="title", value=plantilla.title_plantilla required)
+            p Contenido de la Plantilla
+            .cont-editor
+                  div.editor4#editor
+            input(type="text", id="text_plantilla-edit", name="text", value=plantilla.texto_plantilla required hidden)
+            button.add-button(type="submit" id="btn-plantilla-edit") Editar 

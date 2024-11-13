@@ -1,0 +1,15 @@
+extends layouts/main
+
+block content
+      main.container 
+        h1= title 
+        div.text-right
+            a.delete-button(href="/plantillas") volver
+        form( id="form-plantillas" action="/plantillas-add" method="POST") 
+            label(for="title") Titulo de la Plantilla
+            input(type="text", id="title_plantilla", name="title", required)
+            p Contenido de plantilla
+            .cont-editor
+                  div.editor2#editor
+            input(type="text", id="text_plantilla", name="text", required hidden)
+            button.add-button(type="submit" id="btn-plantilla") Agregar 
