@@ -1,6 +1,6 @@
 import error from "../middlewares/error.js";
 import mUser from "../models/mUser.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 const cUser = {
   getLoginForm: (req, res) => {

@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 const mUser = {
   getOne: async (username) => {
     try {
