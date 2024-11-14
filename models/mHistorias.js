@@ -92,6 +92,10 @@ WHERE hc.id_historia = (?);`,
       id_antecedentes = null,
       id_habitos = null,
       id_medicamentos = null;
+    data.groupDiagnostico.diagnosticoFinal = data.groupDiagnostico
+      .diagnosticoFinal
+      ? 1
+      : 0;
 
     //   ALERGIAS
     if (data.groupAlergias && data.groupAlergias.alergias) {
@@ -99,7 +103,7 @@ WHERE hc.id_historia = (?);`,
         const [results] = await db.query(
           "INSERT INTO alergias (id_tipo_alergia, importancia, fecha_inicio, fecha_fin) VALUES (?,?,?,?)",
           [
-            data.groupAlergias.alergias,
+            parseInt(data.groupAlergias.alergias),
             data.groupAlergias.alergiasEstado,
             data.groupAlergias.alergiasInicio,
             data.groupAlergias.alergiasFinal,

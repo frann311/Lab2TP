@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "../.."
+	},
+	{
+		"path": "../../../TUDS2/INGENIERIA/tp4/codigo"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "programacion web"
+  }
+}
